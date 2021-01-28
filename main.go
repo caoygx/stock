@@ -560,26 +560,31 @@ func getProduct(row *model.Piao) *model.Piao {
 	res := ResponseProductInfo{}
 	json.Unmarshal([]byte(content), &res)
 	//fmt.Print(res.Result.DanJiCaiWuList)      //所有报表
-	//fmt.Print(res.Result.ZhuYingGouChengList) //主营
+	//fmt.Println(res.Result.ZhuYingGouChengList) //主营
 	var arrZhuying []interface{}
 	for _, v := range res.Result.ZhuYingGouChengList {
-
+		//fmt.Println(v)
+		//os.Exit(1)
 		if v.ReportType == "3" {
-			row := make(map[string]interface{})
-			row["MainForm"] = v.MainForm
-			row["MainIncome"] = v.MainIncome
-			row["MainIncomeRatio"] = v.MainIncomeRatio
+			row2 := make(map[string]interface{})
+			row2["MainForm"] = v.MainForm
+			row2["MainIncome"] = v.MainIncome
+			row2["MainIncomeRatio"] = v.MainIncomeRatio
 			//zhuying += v.MainForm + ":" + v.MainIncome + ":" + v.MainIncomeRatio + "\n"
-			arrZhuying = append(arrZhuying, row)
+			//fmt.Println(row)
+			arrZhuying = append(arrZhuying, row2)
+			//fmt.Println(arrZhuying)
 		}
-
-		//fmt.Println(zhuying)
 
 	}
 	//row := model.Piao{}
 	//row.Code = code
 	zhuying, _ := json.Marshal(arrZhuying)
+	//fmt.Println(zhuying)
 	row.Zhuying = string(zhuying)
+	//fmt.Println(zhuying)
+	//fmt.Println(row.Zhuying)
+	//os.Exit(1)
 	row.ProductJson = content
 	return row
 	//row.UpdateAll()
@@ -703,16 +708,21 @@ func getCompanyInfo(row *model.Piao) *model.Piao { //
 
 func getFullInfo() {
 	piao := model.Piao{}
-	r := piao.GetAll()
+	//r := piao.GetAll()
+	r := piao.GetError()
+	//fmt.Println(r)
+	//os.Exit(1)
 	for _, v := range r {
 		//fmt.Println(k, v)
-		/*getDetail(&v)
 		getProduct(&v)
+
+		/*getDetail(&v)
+
 		getProfit(&v)
 		getFinancialReportOfQuarterly(&v)*/
 		//os.Exit(1)
 
-		getCompanyInfo(&v)
+		//getCompanyInfo(&v)
 
 		v.UpdateAll()
 
@@ -770,7 +780,7 @@ func main() {
 	*/
 
 	//获取现有股票列表
-	//getFullInfo()
+	getFullInfo()
 
 	//url = "https://push2.eastmoney.com/api/qt/stock/get?secid=0." + code + "&ut=f057cbcbce2a86e2866ab8877db1d059&forcect=1&fields=" + fields + "&invt=2&cb=jQuery34101417743628563637_1595924232053&_=1595924232055"
 	// code := "sh601006"
@@ -780,10 +790,10 @@ func main() {
 	// fmt.Print(string(r))
 
 	//增加新票和更新最新价格
-	for page := 1; page <= 206; page++ {
+	/*for page := 1; page <= 206; page++ {
 		getAllStock(page)
 		//time.Sleep(time.Second * 3)
-	}
+	}*/
 
 }
 

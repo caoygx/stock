@@ -10,22 +10,22 @@ import (
 )
 
 type Piao struct {
-	ID                    int     `xorm:"not null pk autoincr comment('') INT(11)" json:"id"`
-	Code                  string  `xorm:"comment('')" json:"code"`
-	Name                  string  `xorm:"comment('')" json:"name"`
-	Price                 float64 `xorm:"comment('')" json:"price"`
-	MarketCap             float64 `xorm:"comment('')" json:"market_cap"`
-	NetProfit             string  `xorm:"comment() json:"net_profit"`
-	Industry              string  `xorm:"comment('') json:"industry"`
-	Zhuying               string  `xorm:"comment('') json:"zhuying"`
-	Description           string  `xorm:"comment('') json:"description"`
-	PE                    string  `xorm:"comment() json:"pe"`
-	NetprofitJson         string  `xorm:"comment() json:"netprofit_josn"`
-	DetailJson            string  `xorm:"comment() json:"detail_json"`
-	ProductJson           string  `xorm:"comment() json:"product_json"`
-	FinancialReportJson   string  `xorm:"comment() json:"financial_report_json"`
-	Employees             string  `xorm:"comment() json:"employees"`
-	CompanyInfoJson string  `xorm:"comment() json:"company_info_json"`
+	ID                  int     `xorm:"not null pk autoincr comment('') INT(11)" json:"id"`
+	Code                string  `xorm:"comment('')" json:"code"`
+	Name                string  `xorm:"comment('')" json:"name"`
+	Price               float64 `xorm:"comment('')" json:"price"`
+	MarketCap           float64 `xorm:"comment('')" json:"market_cap"`
+	NetProfit           string  `xorm:"comment() json:"net_profit"`
+	Industry            string  `xorm:"comment('') json:"industry"`
+	Zhuying             string  `xorm:"comment('') json:"zhuying"`
+	Description         string  `xorm:"comment('') json:"description"`
+	PE                  string  `xorm:"comment() json:"pe"`
+	NetprofitJson       string  `xorm:"comment() json:"netprofit_josn"`
+	DetailJson          string  `xorm:"comment() json:"detail_json"`
+	ProductJson         string  `xorm:"comment() json:"product_json"`
+	FinancialReportJson string  `xorm:"comment() json:"financial_report_json"`
+	Employees           string  `xorm:"comment() json:"employees"`
+	CompanyInfoJson     string  `xorm:"comment() json:"company_info_json"`
 }
 
 var DB *gorm.DB
@@ -120,4 +120,11 @@ func (this *Piao) GetAll() (rows []Piao) {
 	return rows
 	//fmt.Println(rows)
 
+}
+
+func (this *Piao) GetError() (rows []Piao) {
+	//DB.Where("brief=?","").Find(&rows)
+	DB.Where("code=?","300894").Find(&rows)
+	
+	return rows
 }
